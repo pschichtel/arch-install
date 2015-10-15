@@ -1,0 +1,35 @@
+syntax on
+set nocompatible
+
+set nobackup
+set noswapfile
+set writebackup
+set undolevels=9001
+set history=9001
+set autoread
+set noautochdir
+set encoding=utf-8
+set fileformat=unix
+
+set background=dark
+set autoindent
+set tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+set wrap
+set linebreak
+set backspace=indent,eol,start
+set hlsearch
+set noincsearch
+set ignorecase
+set smartcase
+set number
+set t_Co=256
+
+map <F2> <Esc>:call FontAndBGToggle()<cr>
+function! FontAndBGToggle()
+    if &background=='dark'
+        set background=light
+    else
+        set background=dark
+    endif
+endfunction
+

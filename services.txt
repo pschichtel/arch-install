@@ -1,0 +1,15 @@
+tlp
+wpa_supplicant
+NetworkManager
+ModemManager
+osspd
+acpid
+gdm
+geoclue
+bluetooth
+org.cups.cupsd
+upower
+colord
+firewalld
+systemd-networkd
+

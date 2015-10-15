@@ -1,0 +1,12 @@
+[Unit]
+Description=Pacman mirrorlist update
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/reflector --country Germany --protocol https --fastest 5 --latest 30 --sort score --save /etc/pacman.d/mirrorlist
+
+[Install]
+RequiredBy=multi-user.target
+
