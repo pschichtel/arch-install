@@ -144,3 +144,5 @@ gtk-engine-unico
 infinality-bundle
 infinality-bundle-multilib
 ibfonts-meta-extended
+os-prober
+btrfs-progs

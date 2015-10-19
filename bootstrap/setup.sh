@@ -3,11 +3,8 @@
 here="$(dirname "$(readlink -f "$0")")"
 
 cp "${here}/files/etc/pacman.conf" /etc/pacman.conf
-cp "${here}/files/etc/systemd/system/reflector.service" /etc/systemd/system
-systemctl start reflector
 
 gpg -k
-mkdir /root/.gnupg
 touch /root/.gnupg/dirmngr_ldapservers.conf
 cubyte_key="DFF19658F3D621B5"
 pacman-key --recv-keys "$cubyte_key"
@@ -16,13 +13,13 @@ infinality_key="AE6866C7962DDE58"
 pacman-key --recv-keys "$infinality_key"
 pacman-key --lsign-key "$infinality_key"
 
-pacman -Syu
-pacman --noconfirm --needed -S $(cat "${here}/packages.txt")
+pacman --noconfirm -Sy
+pacman --noconfirm --needed -S $(grep -v '^#' "${here}/packages.txt")
 
 for service in $(cat "${here}/services.txt")
 do
     systemctl enable $service
-    systemctl start $service
+    #systemctl start $service
 done
 
 cp -R ${here}/files/* /
@@ -36,6 +33,7 @@ groupadd --system sudo
 usermod -aG sudo "${username}"
 
 read -s -p "Password: " password
+echo
 if [[ ! -z "$password" ]]
 then
     usermod --password "$password" "$username"
@@ -69,4 +67,5 @@ mkinitcpio -p linux
 grub-mkconfig -o /boot/grub/grub.cfg
 
 read -s -p "Root password []: "
+echo
 
