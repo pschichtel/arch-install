@@ -1,3 +1,4 @@
+# GNOME
 gdm
 gnome
 gnome-boxes
@@ -31,16 +32,26 @@ nautilus-sendto
 seahorse
 seahorse-nautilus
 file-roller
-cheese
 gedit
 gedit-code-assistance
+gtk-engine-murrine
+paper-gtk-theme-git
+paper-icon-theme-git
+gtk-engine-unico
+
+# Printing
 cups
 cups-filters
 cups-pdf
+system-config-printer
+
+# Bluetooth
 bluez
 bluez-cups
 bluez-firmware
 bluez-utils
+
+# Applications
 firefox
 thunderbird
 thunderbird-i18n-de
@@ -53,25 +64,7 @@ hexchat
 libreoffice-fresh
 libreoffice-fresh-de
 libreoffice-fresh-en-GB
-jdk7-openjdk
-jre7-openjdk
-jre7-openjdk-headless
-jdk8-openjdk
-jre8-openjdk
-jre8-openjdk-headless
-java-openjfx
-maven
-nodejs
-npm
-sbt
-scala
-meld
 mysql-workbench
-virtualbox
-virtualbox-ext-vnc
-virtualbox-guest-iso
-virtualbox-host-modules
-virtualbox-sdk
 redshift
 steam
 sublime-text-dev
@@ -79,6 +72,49 @@ flashplugin
 vlc
 nmap
 git
+nano
+vim
+freerdp
+virtviewer
+remmina 
+meld
+p7zip
+firewalld
+dropbox
+nautilus-dropbox
+insync
+insync-nautilus
+cheese
+mariadb
+mariadb-clients
+
+# Java
+jdk7-openjdk
+jre7-openjdk
+jre7-openjdk-headless
+jdk8-openjdk
+jre8-openjdk
+jre8-openjdk-headless
+java-openjfx
+
+# Buildtools / Frameworks
+maven
+nodejs
+npm
+sbt
+scala
+android-tools
+android-udev
+go
+
+# VirtualBox
+virtualbox
+virtualbox-ext-vnc
+virtualbox-guest-iso
+virtualbox-host-modules
+virtualbox-sdk
+
+# Networking
 traceroute
 wpa_supplicant
 ethtool
@@ -90,59 +126,77 @@ networkmanager-openvpn
 networkmanager-pptp
 networkmanager-vpnc
 modemmanager
-wayland
-nano
-vim
-freerdp
-virtviewer
-remmina 
+
+# Power Management
 tlp
 upower
-unp
-mosh
-go
-autofs
 acpi
 acpi_call
 acpid
-android-tools
-android-udev
+
+# Input
 xorg-xinput
 libinput
 xf86-input-libinput
 xf86-input-synaptics
+
+# Video
+wayland
+mesa
+mesa-libgl
+lib32-mesa
+lib32-mesa-libgl
+xf86-video-intel
+xf86-video-ati
+xf86-video-nouveau
+libva-intel-driver
+mesa-vdpau
+lib32-mesa-vdpau
+
+# Codecs
 x264
 x265
+ffmpeg
+gstreamer
+gstreamer-vaapi
+gst-plugins-good
+gst-libav
+
+# Audio
 pulseaudio
 pulseaudio-alsa
 pulseaudio-bluetooth
 pulseaudio-equalizer
 pulseaudio-gconf
 ossp
-p7zip
+alsa
+alsa-firmware
+alsa-oss
+alsa-utils
+
+# Filesystem drivers
+autofs
 ntfs-3g
 fuse-exfat
+btrfs-progs
+
+# Shell tools
+unp
+mosh
 lsof
 dnsmasq
 bash-completion
-mariadb
-mariadb-clients
 sqlite
 sudo
 fprint
-grub
 reflector
-firewalld
-dropbox
-nautilus-dropbox
-insync
-insync-nautilus
-gtk-engine-murrine
-paper-gtk-theme-git
-paper-icon-theme-git
-gtk-engine-unico
+
+# Font
 infinality-bundle
 infinality-bundle-multilib
 ibfonts-meta-extended
+
+# Boot
+grub
 os-prober
-btrfs-progs
+

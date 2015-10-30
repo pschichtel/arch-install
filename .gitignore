@@ -1,0 +1,7 @@
+*.sig
+*.tar.xz
+*.tar.gz
+*.files
+*.db
+*.old
+

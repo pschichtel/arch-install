@@ -14,7 +14,7 @@ pacman-key --recv-keys "$infinality_key"
 pacman-key --lsign-key "$infinality_key"
 
 pacman --noconfirm -Sy
-pacman --noconfirm --needed -S $(grep -v '^#' "${here}/packages.txt")
+pacman --noconfirm --needed -S $(grep -P '\S' "${here}/packages.txt" | grep -vP '^\s*#')
 
 for service in $(cat "${here}/services.txt")
 do
@@ -28,15 +28,15 @@ while [[ -z "$username" ]]
 do
     read -p "Username: " username
 done
-useradd --home-dir "/home/${username}" --create-home "$username"
+useradd --create-home --home-dir "/home/${username}" $username
 groupadd --system sudo
-usermod -aG sudo "${username}"
+usermod -aG sudo ${username}
 
 read -s -p "Password: " password
 echo
 if [[ ! -z "$password" ]]
 then
-    usermod --password "$password" "$username"
+    usermod --password "$password" $username
 fi
 
 default_hostname='arch'
