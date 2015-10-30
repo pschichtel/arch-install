@@ -128,11 +128,13 @@ networkmanager-vpnc
 modemmanager
 
 # Power Management
+acpi
+acpid
+
+# Laptop Power Management
 tlp
 upower
-acpi
 acpi_call
-acpid
 
 # Input
 xorg-xinput
