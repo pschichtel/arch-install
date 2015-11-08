@@ -81,7 +81,7 @@ then
         exit 1
     fi
 
-    read -p "Press [Enter] to wipe $disk and initialize it with new partitions"
+        read -p "Press [Enter] to wipe $disk and initialize it with new partitions"
 
     memory_size=$(free -m | grep -oP '\d+' | head -n 1)
 
@@ -112,7 +112,7 @@ then
     pacman --noconfirm -Sy
     install="pacman --noconfirm --needed -S"
 
-    mkswap         -L swap $swap
+    mkswap -L swap $swap
     swapon "$swap"
 
     $install btrfs-progs
@@ -157,8 +157,10 @@ then
     echo "UEFI support detected, installing GRUB2 to the EFI partition"
     read -p "EFI boot name: " efi_name
     target=x86_64-efi
-    grub-install --target="$target" \
-                 --efi-directory="${boot_mp}/${target}" \
+
+    arch-chroot "$root_mp" /usr/bin/grub-install \
+                 --target="$target" \
+                 --efi-directory="${boot_mp}" \
                  --bootloader-id="$efi_name" \
                  --recheck
 else
