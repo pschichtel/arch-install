@@ -181,6 +181,7 @@ alsa-utils
 
 # Filesystem drivers
 autofs
+dosfstools
 ntfs-3g
 fuse-exfat
 btrfs-progs
