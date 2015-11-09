@@ -30,6 +30,10 @@ show_disks() {
     lsblk -lp | grep -vP '(part|rom|loop)'
 }
 
+show_partitions() {
+    lsblk -lp | grep 'part'
+}
+
 test_disk() {
     if ! file -s $1 > /dev/null 2>&1
     then
@@ -56,6 +60,7 @@ fi
 
 stat /sys/firmware/efi/efivars > /dev/null 2>&1
 efi_mode=$?
+install="/usr/bin/pacman --noconfirm --needed -S"
 
 root_mp="/mnt"
 boot_mp="${root_mp}/boot"
@@ -91,11 +96,12 @@ then
     then
         boot_size=1024
         $parted mkpart primary fat32 "0%" "${boot_size}MiB"
-        $parted name 1 boot
+        $parted name 1 efi
         $parted set 1 boot on
     else
         boot_size=1
         $parted mkpart primary fat32 "0%" "${boot_size}MiB"
+        $parted name 1 grub
         $parted set 1 bios_grub on
     fi
     swap_size=$memory_size
@@ -110,26 +116,23 @@ then
     root="${disk}3"
 
     pacman --noconfirm -Sy
-    install="pacman --noconfirm --needed -S"
 
     mkswap -L swap $swap
     swapon "$swap"
 
     $install btrfs-progs
-    mkfs.btrfs  -f -L root $root
+    mkfs.btrfs -f -L root $root
     mount "$root" "$root_mp"
 
     if [[ $efi_mode -eq 0 ]]
     then
         mkfs.fat -F 32 -n BOOT $boot
-        mkdir "$boot_mp"
-        mount "$boot" "$boot_mp"
     fi
 else
     echo -e "\n\n\n"
     echo "####### Manual mode..."
     echo "The script assumes all partitions have been configured properly."
-    echo "The root partition must be mounted on /mnt and other partitions below ${root_mp}."
+    echo "The root partition must be mounted on ${root_mp} and other partitions below ${root_mp}."
     echo "The Swap partition must be enabled using the swapon command."
     echo
     read -p "Press [Enter] to continue"
@@ -152,17 +155,31 @@ reflector --country Germany \
 pacstrap "$root_mp" base grub
 genfstab -pL "$root_mp" >> "${root_mp}/etc/fstab"
 
+grub="/usr/bin/grub-install"
 if [[ $efi_mode -eq 0 ]]
 then
     echo "UEFI support detected, installing GRUB2 to the EFI partition"
     read -p "EFI boot name: " efi_name
     target=x86_64-efi
 
-    arch-chroot "$root_mp" /usr/bin/grub-install \
+    if [[ -z "$boot" ]]
+    then
+        while [[ -z "$boot" ]] && ! test_disk $boot
+        do
+            show_partitions
+            read -p "EFI partition: " boot
+        done
+    fi
+
+    mkdir "${root_mp}/efi"
+    mount "$boot" "${root_mp}/efi"
+    arch-chroot "$root_mp" "$grub" \
                  --target="$target" \
-                 --efi-directory="${boot_mp}" \
+                 --efi-directory="/efi" \
                  --bootloader-id="$efi_name" \
                  --recheck
+    umount "$boot"
+    rmdir "${root_mp}/efi"
 else
     echo "Legacy boot detected, installing GRUB2 to the MBR"
     while [[ -z "$disk" ]] && ! test_disk $disk
@@ -170,7 +187,7 @@ else
         show_disks
         read -p "Disk to install GRUB to: " disk
     done
-    arch-chroot "$root_mp" /usr/bin/grub-install $disk
+    arch-chroot "$root_mp" "$grub" "$disk"
 fi
 
 wget --quiet \
@@ -188,6 +205,5 @@ cp "$mirrorlist" "${root_mp}${mirrorlist}"
 
 arch-chroot "$root_mp" /bin/bash /root/bootstrap/setup.sh
 
-umount "$boot_mp"
 umount "$root_mp"
 swapoff "$swap"

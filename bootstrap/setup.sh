@@ -66,6 +66,7 @@ locale-gen
 mkinitcpio -p linux
 grub-mkconfig -o /boot/grub/grub.cfg
 
-read -s -p "Root password []: "
+read -s -p "Root password []: " rootpassword
 echo
+usermod --password "$rootpassword" root
 
