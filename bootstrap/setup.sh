@@ -45,7 +45,7 @@ echo "${hostname:=$default_hostname}" > /etc/hostname
 
 default_timezone="Europe/Berlin"
 read -p "Timezone [$default_timezone]: " timezone
-ln -s "/usr/share/zoneinfo/${timezone:=$default_timezone}"
+ln -s "/usr/share/zoneinfo/${timezone:=$default_timezone}" /etc/localtime
 
 default_default_locale="de_DE.UTF-8"
 read -p "Default Locale [$default_default_locale]: " default_timezone
