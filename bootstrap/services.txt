@@ -11,5 +11,5 @@ org.cups.cupsd.service
 upower.service
 colord.service
 firewalld.service
-systemd-networkd.service.service
+systemd-networkd.service
 avahi-daemon.service
