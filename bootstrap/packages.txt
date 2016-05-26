@@ -36,10 +36,13 @@ seahorse-nautilus
 file-roller
 gedit
 gedit-code-assistance
+bijiben
+
+# Theming
 gtk-engine-murrine
-paper-gtk-theme-git
+adapta-gtk-theme
 paper-icon-theme-git
-gtk-engine-unico
+
 
 # Printing
 cups
