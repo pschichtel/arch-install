@@ -136,11 +136,8 @@ modemmanager
 # Power Management
 acpi
 acpid
-
-# Laptop Power Management
 tlp
 upower
-acpi_call
 
 # Input
 xorg-xinput
@@ -177,10 +174,11 @@ pulseaudio-bluetooth
 pulseaudio-equalizer
 pulseaudio-gconf
 ossp
-alsa
 alsa-firmware
 alsa-oss
 alsa-utils
+alsa-plugins
+alsa-tools
 
 # Filesystem drivers
 autofs
